@@ -122,10 +122,10 @@ namespace EManagement_BusinessEngine.Implementation
                 data.IsActive = false;
                 _unitofWork.EmployeeLeaveTypeRepository.Update(data);
                 _unitofWork.Save();
-                return new Result<EmployeeLeaveTypeViewModel>(true, ResultConstants.RecordCreatedSuccessfully);
+                return new Result<EmployeeLeaveTypeViewModel>(true, ResultConstants.RecordRemovedSuccessfully);
             }
             else
-                return new Result<EmployeeLeaveTypeViewModel>(false, ResultConstants.RecordCreatedNotSuccessfully);
+                return new Result<EmployeeLeaveTypeViewModel>(false, ResultConstants.RecordRemovedNotSuccessfully);
         }
     }
 }

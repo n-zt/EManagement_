@@ -78,7 +78,6 @@ namespace EManagement_.Controllers
         }
 
 
-
         [HttpDelete]
         public IActionResult Delete(int id)
         {
