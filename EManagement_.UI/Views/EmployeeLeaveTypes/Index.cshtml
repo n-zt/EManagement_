@@ -1,0 +1,98 @@
+﻿@model IEnumerable<EManagement_Common.VModels.EmployeeLeaveTypeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="page-header">
+    <h3>
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            Employee Leave Types List
+        </small>
+    </h3>
+</div><!-- /.page-header -->
+
+<div class="col-6 text-left text-white">
+    <a class="btn btn-success" asp-controller="EmployeeLeaveTypes" asp-action="Create">Add Types</a>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-xs-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Leave Name</th>
+                    <th>Creation Date</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td> @item.Name</td>
+                        <td>@item.DateCreated</td>
+                        <td>
+                            <div class="hidden-sm hidden-xs btn-group">
+
+                                <a class="btn btn-xs btn-info" asp-controller="EmployeeLeaveTypes" asp-action="Edit" asp-route-id="@item.id">
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                </a>
+
+                                <a class="btn btn-xs btn-danger" onclick="removeItem(@item.id)" data-id="@item.id">
+                                    <i class="ace-icon fa fa-trash bigger-120"></i>
+                                </a>
+
+                                <button class="btn btn-xs btn-warning">
+                                    <i class="ace-icon fa fa-flag bigger-120"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div><!-- /.span -->
+</div><!-- /.row -->
+
+
+@section Scripts{
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //});
+            function removeItem(rowId) {
+              swal({
+                title: 'Are you sure that you want to delete?',
+                text: 'Deleted data can not be recovered!',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+              }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/EmployeeLeaveTypes/Delete/" + rowId,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+
+                                location.reload();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}
+
+
