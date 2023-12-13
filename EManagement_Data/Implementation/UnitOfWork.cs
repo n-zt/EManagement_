@@ -18,10 +18,12 @@ namespace EManagement_Data.Implementation
             EmployeeLeaveAllocationRepository = new EmployeeLeaveAllocationRepository(_ctx);
             EmployeeLeaveRequestRepository = new EmployeeLeaveRequestRepository(_ctx);
             EmployeeLeaveTypeRepository = new EmployeeLeaveTypeRepository(_ctx);
+            EmployeeRepository = new EmployeeRepository(_ctx);
         }
         public IEmployeeLeaveAllocationRepository EmployeeLeaveAllocationRepository { get; private set; }
         public IEmployeeLeaveRequestRepository EmployeeLeaveRequestRepository { get; private set; }
         public IEmployeeLeaveTypeRepository EmployeeLeaveTypeRepository { get; private set; }
+        public IEmployeeRepository EmployeeRepository { get; private set; }
 
         public void Dispose()
         {

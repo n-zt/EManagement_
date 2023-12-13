@@ -11,6 +11,7 @@ namespace EManagement_Data.Contracts
         IEmployeeLeaveAllocationRepository EmployeeLeaveAllocationRepository { get; }
         IEmployeeLeaveRequestRepository EmployeeLeaveRequestRepository { get; }
         IEmployeeLeaveTypeRepository EmployeeLeaveTypeRepository { get; }
+        IEmployeeRepository EmployeeRepository { get; }
         void Save();
     }
 }

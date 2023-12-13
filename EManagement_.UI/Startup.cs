@@ -10,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EManagement_Data.DataContext;
 using Microsoft.EntityFrameworkCore;
+using EManagement_Data.DbModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace EManagement_.UI
 {
@@ -31,6 +34,11 @@ namespace EManagement_.UI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Maps));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<EManagement_Context>();
+            services.AddSession();
+
+
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,19 +55,23 @@ namespace EManagement_.UI
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+			app.UseAuthentication();
+			app.UseAuthorization();
+           
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
             });
         }
     }
