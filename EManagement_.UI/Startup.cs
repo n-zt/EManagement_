@@ -13,17 +13,19 @@ using Microsoft.EntityFrameworkCore;
 using EManagement_Data.DbModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using EManagement_Common.ConstantsModels;
 
 namespace EManagement_.UI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,7 +36,8 @@ namespace EManagement_.UI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Maps));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<EManagement_Context>();
+            //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<EManagement_Context>();
+            services.AddIdentity<Employee, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<EManagement_Context>();
             services.AddSession();
 
 
@@ -42,7 +45,7 @@ namespace EManagement_.UI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,UserManager<Employee>userManager,RoleManager<IdentityRole>roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -58,6 +61,8 @@ namespace EManagement_.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            SeedData.Seed(userManager, roleManager);
 
             app.UseRouting();
 

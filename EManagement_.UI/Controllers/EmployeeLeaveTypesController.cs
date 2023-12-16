@@ -1,18 +1,23 @@
 ﻿using EManagement_BusinessEngine.Contracts;
+using EManagement_Common.ConstantsModels;
 using EManagement_Common.VModels;
 using EManagement_Data.Contracts;
 using EManagement_Data.DbModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EManagement_.Controllers
 {
-    public class EmployeeLeaveTypesController : Controller
+	[Authorize(Roles = ResultConstants.Admin_Role)]
+	public class EmployeeLeaveTypesController : Controller
     {
         private readonly IEmployeeLeaveTypeBusinessEngine _employeeLeaveTypeBusinessEngine;
         public EmployeeLeaveTypesController(IEmployeeLeaveTypeBusinessEngine employeeLeaveTypeBusinessEngine)
         {
             _employeeLeaveTypeBusinessEngine = employeeLeaveTypeBusinessEngine;
         }
+
+        
         public IActionResult Index()
         {
             var data = _employeeLeaveTypeBusinessEngine.GetAllEmployeeLeaveTypes();

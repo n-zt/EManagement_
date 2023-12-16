@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
+@inject SignInManager<EManagement_Data.DbModels.Employee> SignInManager
+@inject UserManager<EManagement_Data.DbModels.Employee> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,17 +98,20 @@
 			<script type="text/javascript">
 				try{ace.settings.loadState('sidebar')}catch(e){}
 			</script>
-
-
-			<ul class="nav nav-list">
-				
+			
+			@if (SignInManager.IsSignedIn(User) && User.IsInRole(ResultConstants.Admin_Role))
+			{
 				<li class="">
 					<a asp-controller="EmployeeLeaveTypes" asp-action="Index">
 						<i class="menu-icon fa fa-caret-right"></i>
 						Employee Leave Types
 					</a>
-					
+
 				</li>
+			}
+			<ul class="nav nav-list">
+				
+				
 
 				@*<li class="">
 					<a asp-area="Identity" asp-page="/Account/Login">
